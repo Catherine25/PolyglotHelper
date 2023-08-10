@@ -51,12 +51,11 @@ public partial class BottomMenu : ContentView
         try
         {
             await _importer.Import(text);
+            NextWordRequest();
         }
         catch (SentenceAlreadyImportedException)
         {
             DisplayMessageRequest("The sentence has been already imported!", $"The sentence '{text}' has been already imported!");
         }
-
-        NextWordRequest();
     }
 }
