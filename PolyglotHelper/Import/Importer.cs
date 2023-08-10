@@ -27,9 +27,10 @@ public class Importer : IImporter
         var knownWordsStrings = knownWords.Select(x => x.Word);
 
         // load known sentences
-        var wordsWithSentences = _textProcessor.Run(text);
+        var knownSentences = await _databaseService.Select<SentenceDbItem>();
 
-        if (wordsWithSentences.Any(w => w.Sentence == text))
+        var wordsWithSentences = _textProcessor.Run(text);
+        if (knownSentences.Any(s => s.Sentence == text))
             throw new SentenceAlreadyImportedException();
 
         wordsWithSentences = wordsWithSentences.Where(x => !knownWordsStrings.Contains(x.Word));
