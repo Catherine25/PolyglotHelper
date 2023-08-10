@@ -30,7 +30,9 @@ public partial class MainMenu : ContentView
     {
         _card.Word.RepeatTime = DateTime.Now;
 
-        bool answeredCorrectly = answer == _card.Word.Word;
+        bool answeredCorrectly = Settings.IgnoreCase
+            ? answer.ToLower() == _card.Word.Word.ToLower()
+            : answer == _card.Word.Word;
 
         var nextState = await _stateService.GetNextState(_card, answeredCorrectly);
         _card.Word.State = nextState;
