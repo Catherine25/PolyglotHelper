@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PolyglotHelper.Menu.BottomMenu">
+    <Grid>
+        <Button x:Name="CopyButton"
+                Text="Copy"/>
+        <Button x:Name="BlockWordButton"
+                Text="Block Word"
+                Grid.Column="1"/>
+        <Button x:Name="BlockSentenceButton"
+                Text="Block Sentence"
+                Grid.Column="2"/>
+        <Button x:Name="ImportButton"
+                Text="Import"
+                Grid.Column="5"/>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+    </Grid>
+</ContentView>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PolyglotHelper.Menu.TopMenu">
+    <Grid>
+        <Label x:Name="StateLabel" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Accent2}}"/>
+
+        <Label x:Name="StatisticsLabel"
+               Grid.Column="1"/>
+        <Button x:Name="StatisticsButton"
+                Text="Statistics"
+                Grid.Column="2"/>
+        <Button x:Name="Settings"
+                Text="Settings"
+                Grid.Column="3"/>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+    </Grid>
+</ContentView>
