@@ -6,7 +6,8 @@
             Stroke="{StaticResource Accent2}">
         <FlexLayout x:Name="Desk"
                     Margin="10"
-                    Wrap="Wrap"/>
+                    Wrap="Wrap"
+                    AlignContent="Start"/>
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="10,10,10,10" />
         </Border.StrokeShape>
