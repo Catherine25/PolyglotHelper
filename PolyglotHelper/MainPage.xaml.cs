@@ -73,7 +73,7 @@ public partial class MainPage : ContentPage
 
     private async void DisplayMessageRequest(string message, string detailedMessage)
     {
-        await DisplayPromptAsync(message, detailedMessage);
+        await DisplayAlert(message, detailedMessage, "Ok");
     }
 
     private async void ShowNextWord()
