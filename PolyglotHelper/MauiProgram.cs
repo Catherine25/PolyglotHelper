@@ -23,6 +23,7 @@ public static class MauiProgram
 			.UseMauiCommunityToolkit();
 
 		builder.Services.AddSingleton<ICardService, CardService>();
+		builder.Services.AddSingleton<ICardDbService, CardDbService>();
 		builder.Services.AddSingleton<IStateService, StateService>();
 		builder.Services.AddSingleton<ITextProcessor, TextProcessor>();
 		builder.Services.AddSingleton<ILoggingService, LoggingService>();

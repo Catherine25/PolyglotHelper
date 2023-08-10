@@ -2,6 +2,6 @@
 
 namespace PolyglotHelper.Models;
 
-public record Card(WordDbItem Word, SentenceDbItem Sentence)
+public record Card(WordDbItem Word, SentenceDbItem Sentence, IEnumerable<TagDbItem> Tags)
 {
 }

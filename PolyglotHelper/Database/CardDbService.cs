@@ -1,4 +1,5 @@
 ﻿using PolyglotHelper.Database.Models;
+using PolyglotHelper.Extensions;
 using PolyglotHelper.Models;
 
 namespace PolyglotHelper.Database;
@@ -14,7 +15,7 @@ public interface ICardDbService
 
 public class CardDbService : ICardDbService
 {
-    private DatabaseService _databaseService;
+    private readonly DatabaseService _databaseService;
     
     public CardDbService(DatabaseService databaseService)
     {
@@ -33,11 +34,17 @@ public class CardDbService : ICardDbService
     public async Task<IEnumerable<Card>> GetCards()
     {
         var words = await _databaseService.GetItemsAsync<WordDbItem>();
+        this.Log($"{words.Count} words loaded");
 
         var sentences = await _databaseService.GetItemsAsync<SentenceDbItem>();
+        this.Log($"{sentences.Count} sentences loaded");
+
+        var tags = await _databaseService.GetItemsAsync<TagDbItem>();
+        this.Log($"{tags.Count} tags loaded");
 
         var cards = words.Select(w =>
-            new Card(w, sentences.Single(s => s.Id == w.SentenceId)));
+            new Card(w, sentences.Single(s => s.Id == w.SentenceId), tags.Where(t => t.WordId == w.Id)));
+        this.Log($"{cards.Count()} cards loaded");
 
         return cards;
     }

@@ -1,5 +1,4 @@
 ﻿using PolyglotHelper.Database;
-using PolyglotHelper.Database.Models;
 using PolyglotHelper.Extensions;
 using PolyglotHelper.Models;
 
@@ -23,13 +22,16 @@ public class CardService : ICardService
 {
     private readonly DatabaseService _databaseService;
     private readonly IStateService _stateService;
+    private readonly ICardDbService _cardDbService;
     private Card _currentCard;
 
     public CardService(DatabaseService databaseService,
-        IStateService stateService)
+        IStateService stateService,
+        ICardDbService cardDbService)
     {
         _databaseService = databaseService;
         _stateService = stateService;
+        _cardDbService = cardDbService;
     }
 
     public async Task<Card> GetCurrentCard()
@@ -57,14 +59,7 @@ public class CardService : ICardService
 
     public async Task<IEnumerable<Card>> GetCardsReadyForRepeating(string currentContext = null)
     {
-        var words = await _databaseService.GetItemsAsync<WordDbItem>();
-        this.Log($"{words.Count} words loaded");
-
-        var sentences = await _databaseService.GetItemsAsync<SentenceDbItem>();
-        this.Log($"{sentences.Count} sentences loaded");
-
-        var cards = words.Select(wordItem => new Card(wordItem, sentences.SingleOrDefault(s => s.Id == wordItem.SentenceId)));
-        this.Log($"{cards.Count()} cards loaded");
+        var cards = await _cardDbService.GetCards();
 
         var cardsNotBlocked = cards.Where(c => !c.Word.Blocked);
         this.Log($"{cardsNotBlocked.Count()} words are not blocked");

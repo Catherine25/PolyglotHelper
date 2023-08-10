@@ -27,6 +27,7 @@ public class DatabaseService
         _ = await Database.CreateTableAsync<SentenceDbItem>();
         _ = await Database.CreateTableAsync<WordDbItem>();
         _ = await Database.CreateTableAsync<ActivityDbItem>();
+        _ = await Database.CreateTableAsync<TagDbItem>();
     }
 
     public async Task<List<T>> Select<T>() where T : DbItem, new()

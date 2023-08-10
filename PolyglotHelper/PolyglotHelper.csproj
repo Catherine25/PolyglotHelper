@@ -68,6 +68,9 @@
 	  <MauiXaml Update="Menu\Panes\RightPane.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Menu\Panes\TagsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Menu\TopMenu.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

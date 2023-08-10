@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PolyglotHelper.Menu.Panes"
              x:Class="PolyglotHelper.Menu.Panes.RightPane">
     <Border BackgroundColor="{StaticResource Accent2}"
             Stroke="{StaticResource Accent2}">
@@ -13,6 +14,9 @@
             <Label Text="Sentence note"/>
             <Editor x:Name="_sentenceNoteEditor"/>
             <Button x:Name="_saveSentenceNoteButton" Text="Save"/>
+
+            <Label Text="Tags"/>
+            <local:TagsView x:Name="_tagsView"/>
         </StackLayout>
 
         <Border.StrokeShape>
