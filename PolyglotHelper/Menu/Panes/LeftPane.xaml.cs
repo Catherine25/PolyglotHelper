@@ -41,10 +41,13 @@ public partial class LeftPane : ContentView
     {
         var previousColor = _entry.TextColor;
 
-        _entry.ColorTo(previousColor, Colors.Green, c => _entry.TextColor = c, 1000);
-        Thread.Sleep(1000);
-        _entry.ColorTo(Colors.Green, previousColor, c => _entry.TextColor = c, 1000);
-        Thread.Sleep(1000);
+        _entry.ColorTo(previousColor, Colors.Green, c => _entry.TextColor = Colors.Green, 1000);
+        UpdateChildrenLayout();
+        Thread.Sleep(500);
+
+        _entry.ColorTo(Colors.Green, previousColor, c => _entry.TextColor = previousColor, 1000);
+        UpdateChildrenLayout();
+        Thread.Sleep(500);
     }
 
     private void GenerateWordViewsForWord(IEnumerable<(string contextWord, Card studiedWord)> mappedWords)
