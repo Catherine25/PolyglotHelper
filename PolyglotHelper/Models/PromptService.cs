@@ -4,6 +4,7 @@ public static class Prompts
 {
     public const string Yes = "Yes";
     public const string No = "No";
+    public const string Ok = "Ok";
 
     public const string EnterText = "Enter text";
     public const string EnterText_Desc = "Please enter text.";

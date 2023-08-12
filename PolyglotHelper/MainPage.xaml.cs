@@ -92,7 +92,7 @@ public partial class MainPage : ContentPage
 
         if (!wordAvailable)
         {
-            await DisplayAlert(Prompts.NoCardsAvailable, Prompts.NoCardsAvailable_Desc, "Ok");
+            await DisplayAlert(Prompts.NoCardsAvailable, Prompts.NoCardsAvailable_Desc, Prompts.Ok);
             return null;
         }
 
@@ -102,7 +102,7 @@ public partial class MainPage : ContentPage
 
         if (!readyForRepeating.Any())
         {
-            await DisplayAlert(Prompts.NoCardsAvailable, Prompts.NoCardsAvailable_Desc, "Ok");
+            await DisplayAlert(Prompts.NoCardsAvailable, Prompts.NoCardsAvailable_Desc, Prompts.Ok);
             return null;
         }
 
