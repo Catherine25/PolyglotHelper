@@ -15,13 +15,14 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 
+        AlertService.Init(this);
+
         BottomMenu.Init(importer);
         BottomMenu.TextRequest += TextRequest;
         BottomMenu.NextWordRequest += ShowNextWord;
         BottomMenu.ClipboardRequest += BottomMenu_ClipboardRequest;
         BottomMenu.BlockWordRequest += BottomMenu_BlockWordRequest;
         BottomMenu.BlockSentenceRequest += BottomMenu_BlockSentenceRequest;
-        BottomMenu.DisplayMessageRequest += DisplayMessageRequest;
 
         MainMenu.Init(stateService, loggingService);
         MainMenu.WordAnswered += MainMenu_WordAnswered;
@@ -69,11 +70,6 @@ public partial class MainPage : ContentPage
     private async Task<string> TextRequest()
     {
         return await DisplayPromptAsync(Prompts.EnterText, Prompts.EnterText_Desc);
-    }
-
-    private async void DisplayMessageRequest(string message, string detailedMessage)
-    {
-        await DisplayAlert(message, detailedMessage, "Ok");
     }
 
     private async void ShowNextWord()

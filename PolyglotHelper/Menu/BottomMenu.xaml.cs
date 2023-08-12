@@ -1,11 +1,11 @@
 using PolyglotHelper.Import;
+using PolyglotHelper.Services;
 
 namespace PolyglotHelper.Menu;
 
 public partial class BottomMenu : ContentView
 {
     public Func<Task<string>> TextRequest;
-    public Action<string, string> DisplayMessageRequest;
     public Action BlockWordRequest;
     public Action BlockSentenceRequest;
 
@@ -55,7 +55,7 @@ public partial class BottomMenu : ContentView
         }
         catch (SentenceAlreadyImportedException)
         {
-            DisplayMessageRequest("The sentence has been already imported!", $"The sentence '{text}' has been already imported!");
+            await AlertService.Alert("The sentence has been already imported!", $"The sentence '{text}' has been already imported!", "Ok");
         }
     }
 }
