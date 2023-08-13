@@ -29,7 +29,7 @@ public class TextProcessor : ITextProcessor
 
     private static string[] ExtractWords(string sentence)
     {
-        return sentence.Split(new char[] { ' ', ',', '?', '(', ')', '/', '=', ':', '-', ';' },
+        return sentence.Split(new char[] { ' ', ',', '.', '?', '(', ')', '/', '=', ':', '-', ';' },
             StringSplitOptions.RemoveEmptyEntries);
     }
 }
