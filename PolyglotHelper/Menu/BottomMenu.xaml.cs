@@ -5,7 +5,6 @@ namespace PolyglotHelper.Menu;
 
 public partial class BottomMenu : ContentView
 {
-    public Func<Task<string>> TextRequest;
     public Action BlockWordRequest;
     public Action BlockSentenceRequest;
 
@@ -46,16 +45,19 @@ public partial class BottomMenu : ContentView
 
     private async void ImportButton_Clicked(object sender, EventArgs e)
     {
-        var text = await TextRequest();
+        var sentence = await AlertService.ShowTextRequest();
+
+        if (sentence == null)
+            return;
 
         try
         {
-            await _importer.Import(text);
+            await _importer.Import(sentence);
             NextWordRequest();
         }
         catch (SentenceAlreadyImportedException)
         {
-            await AlertService.Alert("The sentence has been already imported!", $"The sentence '{text}' has been already imported!", "Ok");
+            await AlertService.ShowSentenceAlreadyImported(sentence);
         }
     }
 }

@@ -15,10 +15,9 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 
-        AlertService.Init(this);
+        BaseAlertService.Init(this);
 
         BottomMenu.Init(importer);
-        BottomMenu.TextRequest += TextRequest;
         BottomMenu.NextWordRequest += ShowNextWord;
         BottomMenu.ClipboardRequest += BottomMenu_ClipboardRequest;
         BottomMenu.BlockWordRequest += BottomMenu_BlockWordRequest;
@@ -67,11 +66,6 @@ public partial class MainPage : ContentPage
         ShowNextWord();
     }
 
-    private async Task<string> TextRequest()
-    {
-        return await DisplayPromptAsync(Prompts.EnterText, Prompts.EnterText_Desc);
-    }
-
     private async void ShowNextWord()
     {
         Card currentCard = await LoadNewCard();
@@ -92,7 +86,7 @@ public partial class MainPage : ContentPage
 
         if (!wordAvailable)
         {
-            await DisplayAlert(Prompts.NoCardsAvailable, Prompts.NoCardsAvailable_Desc, Prompts.Ok);
+            await AlertService.ShowNoCardsAvailable();
             return null;
         }
 
@@ -102,7 +96,7 @@ public partial class MainPage : ContentPage
 
         if (!readyForRepeating.Any())
         {
-            await DisplayAlert(Prompts.NoCardsAvailable, Prompts.NoCardsAvailable_Desc, Prompts.Ok);
+            await AlertService.ShowNoCardsAvailable();
             return null;
         }
 
