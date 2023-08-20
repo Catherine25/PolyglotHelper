@@ -36,6 +36,6 @@ public partial class RightPane : ContentView
 
         _wordNoteEntry.Text = _card.Word.Note;
         _sentenceNoteEditor.Text = _card.Sentence.Note;
-        _tagsView.SetTags(_card.Tags);
+        // _tagsView.SetTags(_card.Word.TagIds);
     }
 }

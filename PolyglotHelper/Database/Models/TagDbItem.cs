@@ -2,6 +2,14 @@
 
 public class TagDbItem : DbItem
 {
-    public int WordId { get; set; }
+    public TagDbItem()
+    {
+    }
+
+    public TagDbItem(string tag)
+    {
+        Tag = tag;
+    }
+
     public string Tag { get; set; }
 }

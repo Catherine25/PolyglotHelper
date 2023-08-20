@@ -20,25 +20,22 @@ public class DatabaseService
 
         string databasePath = DatabaseConfiguration.DatabasePath;
         
+        this.Log("\n");
         this.Log("Database path is " + databasePath);
+        this.Log("\n");
         
         Database = new SQLiteAsyncConnection(databasePath, DatabaseConfiguration.Flags);
 
-        _ = await Database.CreateTableAsync<SentenceDbItem>();
         _ = await Database.CreateTableAsync<WordDbItem>();
-        _ = await Database.CreateTableAsync<ActivityDbItem>();
+        _ = await Database.CreateTableAsync<SentenceDbItem>();
         _ = await Database.CreateTableAsync<TagDbItem>();
+        _ = await Database.CreateTableAsync<ActivityDbItem>();
     }
 
     public async Task<List<T>> Select<T>() where T : DbItem, new()
     {
         await Init();
         return await Database.Table<T>().ToListAsync();
-    }
-
-    public async Task<bool> Any<T>() where T : DbItem, new()
-    {
-        return (await Select<T>()).Any();
     }
 
     public async Task<int> GetWordsPracticedToday()

@@ -43,7 +43,7 @@ public class CardDbService : ICardDbService
         this.Log($"{tags.Count} tags loaded");
 
         var cards = words.Select(w =>
-            new Card(w, sentences.Single(s => s.Id == w.SentenceId), tags.Where(t => t.WordId == w.Id)));
+            new Card(w, sentences.Single(s => s.Id == w.SentenceId)));
         this.Log($"{cards.Count()} cards loaded");
 
         return cards;

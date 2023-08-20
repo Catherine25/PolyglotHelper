@@ -74,7 +74,7 @@ public class CardService : ICardService
                 cardsToStudy.Add(item);
         }
         //var cardsToStudy = cardsNotBlocked.Where(c => _stateService.ReadyToForRepeating(c).Result); 
-        this.Log($"{cardsToStudy.Count()} words are ready for repeating");
+        this.Log($"{cardsToStudy.Count} words are ready for repeating");
 
         var mostKnownCards = cardsToStudy.OrderByDescending(c => c.Word.State); // first repeat most known
 

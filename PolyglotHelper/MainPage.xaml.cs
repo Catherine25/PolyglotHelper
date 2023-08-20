@@ -1,4 +1,6 @@
-﻿using PolyglotHelper.Import;
+﻿using PolyglotHelper.Alerts;
+using PolyglotHelper.Database;
+using PolyglotHelper.Import;
 using PolyglotHelper.Models;
 using PolyglotHelper.Services;
 
@@ -11,11 +13,13 @@ public partial class MainPage : ContentPage
     public MainPage(ICardService cardService,
         IStateService stateService,
         ILoggingService loggingService,
-        IImporter importer)
+        IImporter importer,
+        DatabaseService databaseService)
 	{
 		InitializeComponent();
 
         BaseAlertService.Init(this);
+        TagService.Init(databaseService);
 
         BottomMenu.Init(importer);
         BottomMenu.NextWordRequest += ShowNextWord;
