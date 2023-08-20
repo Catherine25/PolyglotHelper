@@ -3,51 +3,55 @@ using PolyglotHelper.Services;
 
 namespace PolyglotHelper.Alerts;
 
-public static class AlertService
+public class AlertService : BaseAlertService
 {
-    public static async Task ShowSentenceAlreadyImported(string sentence)
+    public AlertService(MainPage mainPage) : base(mainPage)
     {
-        await BaseAlertService.DisplayAlert(
+    }
+
+    public async Task ShowSentenceAlreadyImported(string sentence)
+    {
+        await DisplayAlert(
             "The sentence has been already imported!",
             $"The sentence '{sentence}' has been already imported!",
             Responses.Ok);
     }
 
-    public static async Task<string> ShowTextRequest()
+    public async Task<string> ShowTextRequest()
     {
-        return await BaseAlertService.DisplayPromptAsync(
+        return await DisplayPromptAsync(
             "Enter text",
             "Please enter text.");
     }
 
-    public static async Task ShowNoCardsAvailable()
+    public async Task ShowNoCardsAvailable()
     {
-        await BaseAlertService.DisplayAlert(
+        await DisplayAlert(
             "No cards available!",
             "Please import more for practicing.",
             Responses.Ok);
     }
 
-    public static async Task ShowTagWizard()
+    public async Task ShowTagWizard()
     {
         const string createNew = "Create new";
         var tags = await TagService.GetAll();
         var tagStrings = tags.Select(o => o.Tag);
 
-        var result = await BaseAlertService.DisplayActionSheet("Choose tag", createNew, Responses.Cancel, tagStrings.ToArray());
+        var result = await DisplayActionSheet("Choose tag", createNew, Responses.Cancel, tagStrings.ToArray());
 
         if (result == Responses.Cancel)
             return;
 
         if (result == createNew)
         {
-            string newTag = await BaseAlertService.DisplayPromptAsync(
+            string newTag = await DisplayPromptAsync(
                 "Create tag",
                 "Please enter new tag.");
 
             if (tagStrings.Contains(newTag))
             {
-                await BaseAlertService.DisplayAlert(
+                await DisplayAlert(
                     "Error creating tag",
                     "The tag already exists!",
                     Responses.Ok);

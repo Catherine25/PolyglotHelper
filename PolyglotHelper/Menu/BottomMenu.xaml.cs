@@ -45,7 +45,7 @@ public partial class BottomMenu : ContentView
 
     private async void ImportButton_Clicked(object sender, EventArgs e)
     {
-        var sentence = await AlertService.ShowTextRequest();
+        var sentence = await MainPage.AlertService.ShowTextRequest();
 
         if (sentence == null)
             return;
@@ -57,7 +57,7 @@ public partial class BottomMenu : ContentView
         }
         catch (SentenceAlreadyImportedException)
         {
-            await AlertService.ShowSentenceAlreadyImported(sentence);
+            await MainPage.AlertService.ShowSentenceAlreadyImported(sentence);
         }
     }
 }

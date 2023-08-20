@@ -1,4 +1,3 @@
-using PolyglotHelper.Alerts;
 using PolyglotHelper.Database.Models;
 using PolyglotHelper.Services;
 
@@ -34,7 +33,7 @@ public partial class TagsView : ContentView
     private async void AddButton_Clicked(object sender, EventArgs e)
     {
         var tags = await TagService.GetAll();
-        await AlertService.ShowTagWizard();
+        await MainPage.AlertService.ShowTagWizard();
         //TagsLayout.Children.Add(new Entry());
     }
 }

@@ -8,6 +8,8 @@ namespace PolyglotHelper;
 
 public partial class MainPage : ContentPage
 {
+    public static AlertService AlertService { get; private set; }
+
     private readonly ICardService _cardService;
 
     public MainPage(ICardService cardService,
@@ -18,7 +20,8 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 
-        BaseAlertService.Init(this);
+        AlertService = new AlertService(this);
+
         TagService.Init(databaseService);
 
         BottomMenu.Init(importer);
