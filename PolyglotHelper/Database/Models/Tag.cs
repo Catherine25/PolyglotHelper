@@ -1,5 +1,10 @@
 ﻿namespace PolyglotHelper.Database.Models;
 
+public sealed class Tag : TagDbItem
+{
+
+}
+
 public class TagDbItem : DbItem
 {
     public TagDbItem()
