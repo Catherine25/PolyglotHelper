@@ -16,18 +16,16 @@ public partial class RightPane : ContentView
         _saveSentenceNoteButton.Clicked += SaveSentenceNoteButton_Clicked;
 	}
 
-    private void SaveSentenceNoteButton_Clicked(object sender, EventArgs e)
+    private async void SaveSentenceNoteButton_Clicked(object sender, EventArgs e)
     {
         _card.Sentence.Note = _sentenceNoteEditor.Text;
-        
-        CardChanged(_card);
+        UpdateCard();
     }
 
-    private void SaveWordNoteButton_Clicked(object sender, EventArgs e)
+    private async void SaveWordNoteButton_Clicked(object sender, EventArgs e)
     {
         _card.Word.Note = _wordNoteEntry.Text;
-
-        CardChanged(_card);
+        UpdateCard();
     }
 
     public void SetCard(Card card)
@@ -37,5 +35,12 @@ public partial class RightPane : ContentView
         _wordNoteEntry.Text = _card.Word.Note;
         _sentenceNoteEditor.Text = _card.Sentence.Note;
         // _tagsView.SetTags(_card.Word.TagIds);
+    }
+
+    private async void UpdateCard()
+    {
+        MainPage.CardService.SetCurrentCard(_card);
+        await MainPage.CardService.Sync();
+        CardChanged(_card);
     }
 }

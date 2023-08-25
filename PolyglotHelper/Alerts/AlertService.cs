@@ -1,5 +1,4 @@
 ﻿using PolyglotHelper.Database.Models;
-using PolyglotHelper.Services;
 
 namespace PolyglotHelper.Alerts;
 
@@ -35,7 +34,7 @@ public class AlertService : BaseAlertService
     public async Task ShowTagWizard()
     {
         const string createNew = "Create new";
-        var tags = await TagService.GetAll();
+        var tags = await MainPage.TagService.GetAll();
         var tagStrings = tags.Select(o => o.Tag);
 
         var result = await DisplayActionSheet("Choose tag", createNew, Responses.Cancel, tagStrings.ToArray());
@@ -57,7 +56,7 @@ public class AlertService : BaseAlertService
                     Responses.Ok);
             }
             else
-                TagService.Add(new TagDbItem(newTag));
+                MainPage.TagService.Add(new TagDbItem(newTag));
         }
 
         throw new NotImplementedException();

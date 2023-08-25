@@ -2,12 +2,12 @@
 
 public class BaseAlertService
 {
+    private readonly MainPage _mainPage;
+
     public BaseAlertService(MainPage mainPage)
     {
         _mainPage = mainPage;
     }
-
-    private readonly MainPage _mainPage;
 
     public async Task DisplayAlert(string title, string description, string cancel)
     {

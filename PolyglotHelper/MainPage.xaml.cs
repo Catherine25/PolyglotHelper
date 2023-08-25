@@ -9,75 +9,38 @@ namespace PolyglotHelper;
 public partial class MainPage : ContentPage
 {
     public static AlertService AlertService { get; private set; }
+    public static DatabaseService DatabaseService { get; private set; }
+    public static ILoggingService LoggingService { get; private set; }
+    public static TagService TagService { get; private set; }
+    public static ICardService CardService { get; private set; }
+    public static IImporter Importer { get; private set; }
+    public static IStateService StateService { get; private set; }
 
-    private readonly ICardService _cardService;
-
-    public MainPage(ICardService cardService,
-        IStateService stateService,
-        ILoggingService loggingService,
-        IImporter importer,
-        DatabaseService databaseService)
+    public MainPage()
 	{
-		InitializeComponent();
-
         AlertService = new AlertService(this);
 
-        TagService.Init(databaseService);
+        DatabaseService = new DatabaseService();
+        LoggingService = new LoggingService(DatabaseService);
+        TagService = new TagService(DatabaseService);
+        Importer = new Importer(DatabaseService, new TextProcessor());
+        StateService = new StateService(LoggingService, new NextGuessService(LoggingService));
+        CardService = new CardService(DatabaseService, StateService, new CardDbService(DatabaseService));
 
-        BottomMenu.Init(importer);
+        InitializeComponent();
+
         BottomMenu.NextWordRequest += ShowNextWord;
-        BottomMenu.ClipboardRequest += BottomMenu_ClipboardRequest;
-        BottomMenu.BlockWordRequest += BottomMenu_BlockWordRequest;
-        BottomMenu.BlockSentenceRequest += BottomMenu_BlockSentenceRequest;
+        MainMenu.NextWordRequest += ShowNextWord;
+        MainMenu.RefreshViewsRequest += ShowCardOnViews;
 
-        MainMenu.Init(stateService, loggingService);
-        MainMenu.WordAnswered += MainMenu_WordAnswered;
-        MainMenu.WordMetadataChanged += MainMenu_WordInContextChanged;
-
-        _cardService = cardService;
-
-        ShowNextWord();
-    }
-
-    private void BottomMenu_BlockSentenceRequest()
-    {
-        _cardService.BlockWord();
-        ShowNextWord();
-    }
-
-    private void BottomMenu_BlockWordRequest()
-    {
-        _cardService.BlockSentence();
-        ShowNextWord();
-    }
-
-    private async void BottomMenu_ClipboardRequest()
-    {
-        var card = await _cardService.GetCurrentCard();
-        await Clipboard.SetTextAsync(card.Sentence.Sentence);
-    }
-
-    private void MainMenu_WordInContextChanged(Card card)
-    {
-        _cardService.SetCurrentCard(card);
-        _cardService.Sync();
-
-        ShowCardOnViews(card);
-    }
-
-    private void MainMenu_WordAnswered(Card card)
-    {
-        _cardService.SetCurrentCard(card);
-        _cardService.Sync();
-
-        ShowNextWord();
+         ShowNextWord();
     }
 
     private async void ShowNextWord()
     {
         Card currentCard = await LoadNewCard();
 
-        _cardService.SetCurrentCard(currentCard);
+        CardService.SetCurrentCard(currentCard);
 
         if (currentCard != null)
             ShowCardOnViews(currentCard);
@@ -89,7 +52,7 @@ public partial class MainPage : ContentPage
 
     private async Task<Card> LoadNewCard()
     {
-        bool wordAvailable = await _cardService.AnyCardAvailable();
+        bool wordAvailable = await CardService.AnyCardAvailable();
 
         if (!wordAvailable)
         {
@@ -97,9 +60,9 @@ public partial class MainPage : ContentPage
             return null;
         }
 
-        Card currentCard = await _cardService.GetCurrentCard();
+        Card currentCard = await CardService.GetCurrentCard();
 
-        var readyForRepeating = await _cardService.GetCardsReadyForRepeating(currentCard.Sentence.Sentence);
+        var readyForRepeating = await CardService.GetCardsReadyForRepeating(currentCard.Sentence.Sentence);
 
         if (!readyForRepeating.Any())
         {

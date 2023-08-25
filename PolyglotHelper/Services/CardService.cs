@@ -25,7 +25,8 @@ public class CardService : ICardService
     private readonly ICardDbService _cardDbService;
     private Card _currentCard;
 
-    public CardService(DatabaseService databaseService,
+    public CardService(
+        DatabaseService databaseService,
         IStateService stateService,
         ICardDbService cardDbService)
     {

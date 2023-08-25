@@ -1,21 +1,15 @@
-using PolyglotHelper.Alerts;
 using PolyglotHelper.Import;
 
 namespace PolyglotHelper.Menu;
 
 public partial class BottomMenu : ContentView
 {
-    public Action BlockWordRequest;
-    public Action BlockSentenceRequest;
-
     public event Action NextWordRequest;
     public event Action ClipboardRequest;
 
-    private IImporter _importer;
-
     public BottomMenu()
 	{
-		InitializeComponent();
+        InitializeComponent();
 
         CopyButton.Clicked += CopyButton_Clicked;
         BlockWordButton.Clicked += BlockWordButton_Clicked;
@@ -23,24 +17,22 @@ public partial class BottomMenu : ContentView
         ImportButton.Clicked += ImportButton_Clicked;
     }
 
-    private void BlockSentenceButton_Clicked(object sender, EventArgs e)
+    private async void BlockSentenceButton_Clicked(object sender, EventArgs e)
     {
-        BlockWordRequest();
+        await MainPage.CardService.BlockSentence();
+        NextWordRequest();
     }
 
-    private void BlockWordButton_Clicked(object sender, EventArgs e)
+    private async void BlockWordButton_Clicked(object sender, EventArgs e)
     {
-        BlockSentenceRequest();
+        await MainPage.CardService.BlockWord();
+        NextWordRequest();
     }
 
-    private void CopyButton_Clicked(object sender, EventArgs e)
+    private async void CopyButton_Clicked(object sender, EventArgs e)
     {
-        ClipboardRequest();
-    }
-
-    public void Init(IImporter importer)
-    {
-        _importer = importer;
+        var card = await MainPage.CardService.GetCurrentCard();
+        await Clipboard.SetTextAsync(card.Sentence.Sentence);
     }
 
     private async void ImportButton_Clicked(object sender, EventArgs e)
@@ -52,7 +44,7 @@ public partial class BottomMenu : ContentView
 
         try
         {
-            await _importer.Import(sentence);
+            await MainPage.Importer.Import(sentence);
             NextWordRequest();
         }
         catch (SentenceAlreadyImportedException)

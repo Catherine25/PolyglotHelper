@@ -1,5 +1,4 @@
 using PolyglotHelper.Database.Models;
-using PolyglotHelper.Services;
 
 namespace PolyglotHelper.Menu.Panes;
 
@@ -32,7 +31,7 @@ public partial class TagsView : ContentView
 
     private async void AddButton_Clicked(object sender, EventArgs e)
     {
-        var tags = await TagService.GetAll();
+        var tags = await MainPage.TagService.GetAll();
         await MainPage.AlertService.ShowTagWizard();
         //TagsLayout.Children.Add(new Entry());
     }

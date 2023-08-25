@@ -3,21 +3,21 @@ using PolyglotHelper.Database.Models;
 
 namespace PolyglotHelper.Services;
 
-public static class TagService
+public class TagService
 {
-    private static DatabaseService _databaseService;
+    private readonly DatabaseService _databaseService;
 
-    public static void Init(DatabaseService databaseService)
+    public TagService(DatabaseService databaseService)
     {
         _databaseService = databaseService;
     }
 
-    public static async void Add(TagDbItem tag)
+    public async void Add(TagDbItem tag)
     {
         await _databaseService.SaveItemAsync(tag);
     }
 
-    public static Task<List<TagDbItem>> GetAll()
+    public Task<List<TagDbItem>> GetAll()
     {
         return _databaseService.GetItemsAsync<TagDbItem>();
     }

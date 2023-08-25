@@ -13,7 +13,7 @@ public class DatabaseService
     {
     }
 
-    async Task Init()
+    private async Task Init()
     {
         if (Database is not null)
             return;
